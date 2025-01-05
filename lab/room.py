@@ -12,11 +12,12 @@ from livingLab.sensors.pyranometer import PyranometerSensor
 class Room(CoupledDEVS):
     def __init__(self, name):
         CoupledDEVS.__init__(self, name)
-        self.human = self.addSubModel(Human("human",100,300))
-        self.artificialLight = self.addSubModel(ArtificialLight("artificialLight",200,200, 700))
+        # add submodels
+        self.human = self.addSubModel(Human("human",1,1))
+        self.artificialLight = self.addSubModel(ArtificialLight("artificialLight",2,2, 4500))
         self.blinds = self.addSubModel(Blinds("blinds"))
         self.brightnessSensor = self.addSubModel(BrightnessSensor("brightnessSensor1"))
-        self.window = self.addSubModel(Window("window"))
+        self.window = self.addSubModel(Window("window",2,0))
         self.sun = self.addSubModel(Sun("sun"))
         self.pyranometerSensor = self.addSubModel(PyranometerSensor("pyranometerSensor"))
 

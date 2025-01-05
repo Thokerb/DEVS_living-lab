@@ -1,4 +1,6 @@
-from livingLab.util.experiment_constants import ROOM_HEIGHT_CM, WINDOW_TRANSMITTANCE, ROOM_REFLECTANCE
+import math
+
+from livingLab.util.experiment_constants import  WINDOW_TRANSMITTANCE, ROOM_REFLECTANCE, ROOM_SURFACE_AREA
 
 
 # static class to calculate lux values
@@ -14,8 +16,25 @@ class LuxCalculator:
         # calculate direct distance
         # inverse square law
         # https://pressbooks.bccampus.ca/lightingforelectricians/chapter/inverse-square-law
-        directLux = lightState.luminance_output / (distance ** 2)
-        indirectLux = ROOM_REFLECTANCE * lightState.luminance_output
+        directLux = lightState.luminance_output / (4 * math.pi * distance ** 2)
+        indirectLux = (ROOM_REFLECTANCE * lightState.luminance_output) / ROOM_SURFACE_AREA
+        return directLux + indirectLux
+
+    @staticmethod
+    def calculateLuxAL(lightState, observerX, observerY):
+
+        if lightState.luminance_output == 0:
+            return 0
+
+        distance = LuxCalculator.calculateDistance(observerX, observerY, lightState.positionX, lightState.positionY)
+        # assume that light source is 1m above the observer
+        distance += 1
+
+        # calculate direct distance
+        # inverse square law
+        # https://pressbooks.bccampus.ca/lightingforelectricians/chapter/inverse-square-law
+        directLux = lightState.luminance_output / (4 * math.pi * distance ** 2)
+        indirectLux = (ROOM_REFLECTANCE * lightState.luminance_output) / ROOM_SURFACE_AREA
         return directLux + indirectLux
 
     @staticmethod
@@ -43,4 +62,6 @@ class LuxCalculator:
     @staticmethod
     def calculateWindowLumen(dni):
         # https://www.extrica.com/article/21667
-        return dni * 120 * WINDOW_TRANSMITTANCE
+        # 120 lx equals 1 W/m2
+        # simplification based on https://anewhouse.com.au/2016/01/window-lighting-levels/#:~:text=Light%20Entering%20The%20Room,will%20be%20around%20900%20lumens.
+        return (dni * 120 * WINDOW_TRANSMITTANCE) / (5)
