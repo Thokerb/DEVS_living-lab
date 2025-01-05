@@ -27,7 +27,7 @@ class TracerCustom(object):
 
     def traceInternal(self, aDEVS):
         # check if adevs is Human
-        if aDEVS.state.__class__.__name__ == "HumanState" and aDEVS.state.toXML:
+        if aDEVS.state.__class__.__name__ in ["HumanState","BrightnessState"]  and aDEVS.state.toXML:
             trace = aDEVS.state.toXML()
             if trace:
                 self.file.write(trace)

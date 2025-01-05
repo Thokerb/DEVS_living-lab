@@ -4,7 +4,8 @@ from pypdevs.util import DEVSException
 
 from livingLab.interactive.lightbulb import LightState
 from livingLab.util.LuxCalculator import LuxCalculator
-from livingLab.util.experiment_constants import MIN_LUX, MAX_LUX
+from livingLab.util.experiment_constants import MIN_LUX, MAX_LUX, START_MORNING_WORK, FINISH_MORNING_WORK, \
+    START_AFTERNOON_WORK, FINISH_AFTERNOON_WORK
 from livingLab.util.pipes import ARTIFICIAL_LUMINANCE_PIPE, WINDOW_LUMINANCE_PIPE, \
     WINDOW_CONCEALMENT_PIPE, INTERACT_BLINDS, INTERACT_AL
 
@@ -43,10 +44,10 @@ class Human(AtomicDEVS):
         self.state = HumanState()
         self.X = positionX
         self.Y = positionY
-        self.startMorningWork = 8*60 # 8:00
-        self.finishMorningWork = 12*60 # 12:00
-        self.startAfternoonWork = 13*60 # 13:00
-        self.finishAfternoonWork = 17*60 # 17:00
+        self.startMorningWork = START_MORNING_WORK  # 8:00
+        self.finishMorningWork = FINISH_MORNING_WORK  # 12:00
+        self.startAfternoonWork = START_AFTERNOON_WORK  # 13:00
+        self.finishAfternoonWork = FINISH_AFTERNOON_WORK  # 17:00
 
         self.out_blinds_activity = self.addOutPort(name=INTERACT_BLINDS)
         self.out_al_activity = self.addOutPort(name=INTERACT_AL)
@@ -87,6 +88,9 @@ class Human(AtomicDEVS):
                 action = "increaseLight"
             if self.state.luminance > MAX_LUX:
                 action = "reduceLight"
+
+        if not self.inOffice() and self.state.artificial_light_on:
+            return {self.out_al_activity: ["reduceLight"]}
 
         if action == "increaseLight":
             if self.state.blinds_closed:

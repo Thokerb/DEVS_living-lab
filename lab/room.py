@@ -16,7 +16,7 @@ class Room(CoupledDEVS):
         self.human = self.addSubModel(Human("human",1,1))
         self.artificialLight = self.addSubModel(ArtificialLight("artificialLight",2,2, 4500))
         self.blinds = self.addSubModel(Blinds("blinds"))
-        self.brightnessSensor = self.addSubModel(BrightnessSensor("brightnessSensor1"))
+        self.brightnessSensor = self.addSubModel(BrightnessSensor("brightnessSensor1", 3, 2))
         self.window = self.addSubModel(Window("window",2,0))
         self.sun = self.addSubModel(Sun("sun"))
         self.pyranometerSensor = self.addSubModel(PyranometerSensor("pyranometerSensor"))

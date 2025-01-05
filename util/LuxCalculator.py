@@ -16,7 +16,7 @@ class LuxCalculator:
         # calculate direct distance
         # inverse square law
         # https://pressbooks.bccampus.ca/lightingforelectricians/chapter/inverse-square-law
-        directLux = lightState.luminance_output / (4 * math.pi * distance ** 2)
+        directLux = lightState.luminance_output / (4 * math.pi * distance ** 2 )
         indirectLux = (ROOM_REFLECTANCE * lightState.luminance_output) / ROOM_SURFACE_AREA
         return directLux + indirectLux
 
