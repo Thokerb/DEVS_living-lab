@@ -7,6 +7,7 @@ from livingLab.interactive.lightbulb import ArtificialLight
 from livingLab.queues.window import Window
 from livingLab.sensors.brightness import BrightnessSensor
 from livingLab.sensors.pyranometer import PyranometerSensor
+from livingLab.util.experiment_constants import ARTIFICIAL_LIGHT_LUMEN
 
 
 class Room(CoupledDEVS):
@@ -14,7 +15,7 @@ class Room(CoupledDEVS):
         CoupledDEVS.__init__(self, name)
         # add submodels
         self.human = self.addSubModel(Human("human",1,1))
-        self.artificialLight = self.addSubModel(ArtificialLight("artificialLight",2,2, 4500))
+        self.artificialLight = self.addSubModel(ArtificialLight("artificialLight",2,2, ARTIFICIAL_LIGHT_LUMEN))
         self.blinds = self.addSubModel(Blinds("blinds"))
         self.brightnessSensor = self.addSubModel(BrightnessSensor("brightnessSensor1", 3, 2))
         self.window = self.addSubModel(Window("window",2,0))

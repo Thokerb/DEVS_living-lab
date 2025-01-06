@@ -41,23 +41,25 @@ def runReport():
         }, ignore_index=True)
 
     # plot
-    plt.plot(df["time"], df["luminance"], label="luminance")
+    plt.plot(df["time"], df["luminance"], label="human_perceived_luminance")
     plt.plot(df["time"], df["window_luminance"], label="window_luminance")
     # transparent line
     plt.plot(df["time"], df["al_luminance"], label="al_luminance", color="red")
 
     # draw a line at start work time
-    plt.axvline(x=START_MORNING_WORK, color="black", linestyle="--")
-    plt.axvline(x=FINISH_MORNING_WORK , color="black", linestyle="--")
-    plt.axvline(x=START_AFTERNOON_WORK , color="black", linestyle="--")
-    plt.axvline(x=FINISH_AFTERNOON_WORK, color="black", linestyle="--")
+    plt.axvline(x=START_MORNING_WORK, color="black", linestyle="--", label="WORK_START")
+    plt.axvline(x=FINISH_AFTERNOON_WORK, color="black", linestyle="--", label="WORK_FINISH")
 
     # add brightness sensor
-    plt.plot(df["time"], df["brightnessSensor"], label="brightnessSensor", color="green")
+    plt.plot(df["time"], df["brightnessSensor"], label="sensor_perceived_luminance", color="green")
 
     # only show from work start to work finish
     plt.xlim(START_MORNING_WORK-60, FINISH_AFTERNOON_WORK+120)
 
-    # show labels
-    plt.legend()
+    # show axis labels
+    plt.xlabel("Time (minutes)")
+    plt.ylabel("Luminance (lux)")
+
+    # show labels in legend at top right
+    plt.legend(loc="upper right")
     plt.show()
