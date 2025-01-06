@@ -1,3 +1,15 @@
+# Getting Started
+
+## Prerequisites
+
+- Python 2.7
+
+Follow the installation instructions from [PythonPDEVS GitHub](https://github.com/capocchi/PythonPDEVS).
+Documentation for PythonPDEVS can be found [here](https://msdl.uantwerpen.be/documentation/PythonPDEVS).
+
+The simulation is not tested in distributed mode and mpi4py.
+Theoretically it should be possible, but the customTracer is probably not working.
+
 # Architecture
 
 ![Image of the Coupled models](doc/living-lab.drawio.png)
@@ -47,4 +59,7 @@ When the human stops working, the human will turn off the light.
 
 Be aware that when the artificial light AL is too high (not between MIN_LUX and MAX_LUX), the human will turn off the light after 1 time unit.
 
-## 
+## Tracing
+
+CustomTracer is a simplified version of the XMLTracer from PythonPDEVS, because there seemed to be a bug in the XMLTracer.
+CustomTracer keeps track of internal transitions from the defined models and writes their toXML string to a file.
